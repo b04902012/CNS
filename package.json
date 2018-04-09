@@ -4,6 +4,7 @@
   "description": "",
   "main": "test.js",
   "dependencies": {
+    "base-64": "^0.1.0",
     "base64-to-image": "^1.0.2",
     "base64-to-jpg": "^1.0.1",
     "big-integer": "^1.6.27",

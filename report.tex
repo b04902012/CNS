@@ -57,7 +57,7 @@
 E-mail: \href{mailto:b04902012@ntu.edu.tw}{\texttt{b04902012@ntu.edu.tw}}\\
 
 \end{center}
-\vspace{10pt}
+\vspace{5pt}
 \section{CIA}
 \subsection{Confidentiality}
     Prevent unarthorized person from accessing the information.\\
@@ -174,6 +174,7 @@ Let $H()$ be the considered hash function.
     Randomly choose a string $s$ repeatedly until the right most 24bits of $SHA1(s_x|s)$ meets the constraint. Then, send $SHA1(s_x|s)$ and $SHA1(s_y|s)$ to the server, and we get the final flkg.\\
 \texttt{BALSN\{P0W\_1s\_4\_w4st3\_0f\_t1m3\_4nd\_3n3rgy\}}
 \section{Future Oracle}
+The procedure is as following.
 \begin{enumerate}[label=\arabic*., topsep=0pt,itemsep=0pt,partopsep=1ex,parsep=1ex]
     \item Pick $ID$ = \texttt{admin}, $N_c$ = $7122$, $action$=\texttt{"login"}.
     \item Send $(ID||N_c||SHA256(ID||N_c))$ to server.
@@ -187,7 +188,18 @@ Let $H()$ be the considered hash function.
     \item Send $newMessage||newMac$ to server, and we will get the final flag.
 \end{enumerate}
 \texttt{BALSN\{Wh4t\_1f\_u\_cou1d\_s33\_th3\_futur3\}}
-
 \section{Digital Saving Account}
+The procedure is as following. Let $s^k$ be a character, say, \texttt{'\_'}, repeat k times.
+\begin{enumerate}[label=\arabic*., topsep=0pt,itemsep=0pt,partopsep=1ex,parsep=1ex]
+    \item Pick username = $s^4$, pasword = $s^1$ and register. Let $d_1$ be the first 16 bytes of the decoded token.
+    \item Pick username = $s^{10}$\texttt{admin}, pasword = $s^1$ and register. Let $d_2$ be the last 32 bytes of the decoded token.
+    \item Pick token = $d_1|d_2$, username = $s^4$, password = $s^1$ and login.
+    \item Let $t_1, t_2$ be the string of those transactions, with $(r_1, s_1)$, $(r_2, s_2)$ be their signagure. Observe that $r_1$ always equals to $r_2$.
+    \item Compute $k=\dfrac{SHA1(t_1)-SHA1(t_2)}{s_1-s_2} \mod q$.
+    \item Compute $s=\dfrac{k\times s1-SHA1(t_1)+SHA1(\text{\texttt{"FLAG"}})}{k^{-1}} \mod q$.
+    \item Send $r_1$, $s$ to the server, and we will get the final flag.
+\end{enumerate}
+\texttt{BALSN\{s3nd\_m3\_s0m3\_b1tc01n\_p13as3\}}
+
         
 \end{document}
