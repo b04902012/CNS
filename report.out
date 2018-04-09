@@ -1,0 +1,16 @@
+\BOOKMARK [1][-]{section.1}{CIA}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Confidentiality}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Integrity}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{Avalibility}{section.1}% 4
+\BOOKMARK [1][-]{section.2}{Hash\040Function}{}% 5
+\BOOKMARK [2][-]{subsection.2.1}{One-wayness}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.2}{Weak\040Collision\040Resistance}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.3}{Strong\040Collision\040Resistance}{section.2}% 8
+\BOOKMARK [1][-]{section.3}{ElGamal\040Threshold\040Decryption}{}% 9
+\BOOKMARK [1][-]{section.4}{How2Crypto}{}% 10
+\BOOKMARK [1][-]{section.5}{Mersenne\040RSA}{}% 11
+\BOOKMARK [1][-]{section.6}{OTP}{}% 12
+\BOOKMARK [1][-]{section.7}{Double\040AES}{}% 13
+\BOOKMARK [1][-]{section.8}{Time\040Machine}{}% 14
+\BOOKMARK [1][-]{section.9}{Future\040Oracle}{}% 15
+\BOOKMARK [1][-]{section.10}{Digital\040Saving\040Account}{}% 16

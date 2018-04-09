@@ -1,0 +1,193 @@
+%!TEX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{clrscode3e}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{subfig}
+\usepackage{listing}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{setspace}
+\newcolumntype{C}{>$c<$}
+\lstset{basicstyle=\ttfamily}
+\usetikzlibrary{calc,shapes.multipart,chains,arrows}
+\newcommand{\points}[1]{ ($#1$ \textit{points}) } 
+\newcommand{\xor}{\oplus} 
+
+\usepackage{fontspec}
+%\setmainfont{Gill Sans MT}
+%\setmainfont{Helvetica}
+
+\pagestyle{plain}
+
+\setlength{\parskip}{10pt}
+\fontsize{12}{14}
+\selectfont
+\textwidth=17cm \textheight=24cm \voffset=-2cm \hoffset=-1.7cm
+
+\makeatother
+\newcommand{\fontitem}{\Large}
+\newcommand{\fontitemi}{\normalsize}
+\newcommand{\fontitemii}{\normalsize}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\def\headline#1{\hbox to \hsize{\hrulefill\quad\lower.3em\hbox{#1}\quad\hrulefill}}
+\def\headline#1{\hbox to \hsize{\hrulefill\quad\lower.3em\hbox{#1}\quad\hrulefill}}
+
+\begin{document}
+
+\begin{center}
+\textbf{\Large Introduction to Mathematical Logic, Spring 2018\\}
+\textbf{\Large Homework 1\\} 
+\vspace{5pt}
+\textbf{B04902012 Han-Sheng Liu, CSIE, NTU}\\
+E-mail: \href{mailto:b04902012@ntu.edu.tw}{\texttt{b04902012@ntu.edu.tw}}\\
+
+\end{center}
+\vspace{10pt}
+\section{CIA}
+\subsection{Confidentiality}
+    Prevent unarthorized person from accessing the information.\\
+    \textbf{Example:} Almost every account system requires login, to prevent the person who doesn't know the password from accessing the information.
+
+\subsection{Integrity}
+    Assure the completeness of the information.\\
+    \textbf{Example:} When providing an software application, not only give the download link but also give the hash value of the file.
+
+\subsection{Avalibility}
+    Maintain the correct function of a service.\\
+    \textbf{Example:} Use proof-of-work protocol to prevent part of denial-of-service attacks.
+
+\section{Hash Function}
+Let $H()$ be the considered hash function.
+\subsection{One-wayness}
+    Given $H(x)$, it's hard to find $x$.\\
+    \textbf{Example:} In a database of account system, we often store $H($password$)$ instead password itself, to keep confidentiality even when the database is hacked. If it is easy to find $H$'s preimage, then this method is no longer secure. 
+\subsection{Weak Collision Resistance}
+    Given $x$, it's hard to find $y\neq x$ such that $H(x)=H(y)$\\
+    \textbf{Example:} A hash value of the file is often provided with the file itself to assure integrity. If it's easy to find another file that has the same value as the original file, then a hacker (or even the provider himself) can modify the file, and the person who download may not be aware that the file is modified.
+\subsection{Strong Collision Resistance}
+    It's hard to find $y\neq x$ such that $H(x)=H(y)$\\
+    \textbf{Example:} Google has found a pair of collision of SHA-1, due to some property of SHA-1, we can find infinity many pair of collision.
+\section{ElGamal Threshold Decryption}
+    After choosing the large prime $p$, all the operation, such as addition, substraction, multiplication, division, and power, below will be done under $\mathbb{F}_p$.\\
+    \texttt{setup: }
+    \begin{align*}
+        \text{large prime}&: p\\
+        \text{generator}&: g\\
+        \text{secret key}&: sk_B=b\\
+        \text{public key}&: pk_B=g^b\\
+        \text{secret random coefficient}&: a_1, a_2, ..., a_{t-1}\\
+        \text{polynomial}&: F(x)=b+\sum\limits_{i=1}^{t-1}a_ix^i\\
+        \text{secret fragments}&: b_i=(i,F(i))\text{, for all $i = 1, 2, ...,n$}
+    \end{align*}
+    \begin{center}Distribute the $n$ fragments to the $n$ people. Let the people be $p_1, p_2, p_n$, give $b_i$ to $p_i$\end{center}
+    \texttt{encryption: }
+    \begin{align*}
+        \text{plaintext}&: m\\
+        \text{random value}&: x\\
+        \text{ciphertext1}&:c_1=g^x\\
+        \text{ciphertext2}&:c_2=m(pk_B)^x
+    \end{align*}
+    \texttt{key construction:}\\
+        W.L.O.G, let the collaborating $t$ people be $p_1, p_2, ..., p_t$, and thus they have $b_1, b_2, ..., b_t$.
+    \begin{align*}
+        \text{secret key}&: b=\sum\limits_{i=1}^{t}F(i)\prod\limits_{j\neq i}j(j-i)^{-1}
+    \end{align*}
+    \texttt{decryption: }
+    \begin{align*}
+        \text{plaintext}&: m=c_2c_1^{-b}
+    \end{align*}
+\section{How2Crypto}
+    After several attemps, I collected some fragments of the plaintext. I googled those plaintext fragments, and got the original plain text. It is actually the first paragraph of \url{https://en.wikipedia.org/wiki/Cryptography}. By obtaining the original plaintext, all of the challenges became much more easier than before.
+    \begin{itemize}
+    \item\textit{Round 1:} Parse the integer sequence into several two-digit integers, and convert them into english alphabets by their order in alphabets list.
+    \item\textit{Round 2:} It's encrypted by Caesar cipher, and the key can be obtained by observing \texttt{m1} and \texttt{c1}.
+    \item\textit{Round 3:} It's encrypted by Caesar cipher, consider all the possible key, and check if the decryption result is a substring in original plain text.
+    \item\textit{Round 4:} It's encrypted by substitution cipher. By observing \texttt{m1} and \texttt{c1}, we can decrypt part of the \texttt{c2}. Fill the part that is not decrypted with \texttt{'.'}, do a ReGex match on the original plaintext, and then send the match result.
+    \item\textit{Round 5:} It's encrypted by one of the permutation cipher. Enumerate all possible interval of the plain text, and check if the number of occurence of each alphabets meets \texttt{c2}.
+    \item\textit{Round 6:} The same as \textit{round 5}.
+    \end{itemize}
+    After passing all the rounds, we will get 6 flag pieces. concat all of them, and decode it with base64 into a png file. The file is a picture with final flag on it.\\
+\texttt{BALSN\{You\_Are\_Crypto\_Expert!!!\^{}\_\^{}\}}
+
+\section{Mersenne RSA}
+    $n$ is a 1128-bit number, so both $p$ and $q$ must be less than $2^1128$. Since that both $p$ and $q$ are Merssene prime numbers, that is, a prime number of form $2^k-1$, $p$ and $q$ have only at most $1128$ possible values. Simply enumerate $p$ and $q$ as  $2^k-1$ for all $1\leq k\leq 1128$, and check if $pq=n$. After finding out $p$ and $q$, decrypt the flag by RSA decryption procedure.\\
+\texttt{BALSN\{if\_N\_is\_factorized\_you\_get\_the\_private\_key\}}
+
+\section{OTP}
+    \texttt{Notation: }
+    \begin{align*}
+        m&: \text{plain text}\\
+        c&: \text{cipher text}\\
+        m_i&: \text{The $i^{th}$ byte of plain text}\\
+        c_i&: \text{The $i^{th}$ byte of cipher text}\\
+        k&: \text{key}\\
+        k_i&: \text{The $i^{th}$ byte of the key}\\
+        l&: \text{length of the key}
+    \end{align*}
+    The plain text is printable, that is, $m_i<128$ for all $i$. According to this property, if the number of bytes of the key is $l$, then $c_0\xor k_0, c_l\xor k_0, c_{2l}\xor k_0, ... <128$, which implies that the first bit of $c_0, c_l, c_{2l}, ...$ must be the same. Generally, $c_i, c_{l+i}, c_{2l+i}, ...$ must also be the same for all $i<l$. Thus, by observing the period $P=13$, we can get $13|l$. Let's assume that $l=13$ first. If this assumption fails, we will assume that $l=26$ secondly, and so on.
+
+    Now, it remains to calculate $k_0, ..., k_{12}$. Assume $c_0, ..., c_{12}$ be space (ASCII: 32) respectively, and we can get the corresponding $k'_0, ..., k'_{12}$. For $i<13$, try decypting $c_i, c_{13+i}, c_{26+i}, ...$ with $k'_i$, and check if all of them are printable. If they are, then $k_i=k'_i$.
+
+    There are two reason we choose space.
+    \begin{itemize}
+    \item Space is the most common character in a English article, so it's more likely that assumption will be correct than choosing the other characters.
+    \item The ASCII value of space is far from the ASCII values of other English characters, so if all decrypted characters are printable, then it's highly likely that the key is correct.
+    \end{itemize}
+
+    After the whole $k$ is computed, decypt $c$ with $k$ and we will get the final flag.\\
+\texttt{BALSN\{NeVer\_U5e\_0ne\_7ime\_PAd\_7wIcE\}}
+\section{Double AES}
+    \texttt{Notation: }
+    \begin{align*}
+        c&: \text{cipher text}\\
+        k_0&: \text{The first key used for encryption}\\
+        k_1&: \text{The second key used for encryption}\\
+        E_k(m)&: \text{Encrypt $m$ using AES with key $k$}\\
+        D_k(m)&: \text{Decrypt $m$ using AES with key $k$}
+    \end{align*}
+    In \texttt{2aes.txt}, a pair of plain and cipher text is provided. Let them be $m_1$ and $c_1$. Note that $c_1=E_{k_1}(E_{k_0}(m_1))$ for some $k_0, k_1 < 2^23$. It is equivalent to $D_{k_1}(c_1)=E_{k_0}(m_1)$.
+
+    Compute $D_{k}(c_1)$ for all $k<2^{23}$ and store all those $(D_{k}(c_1), k)$ pairs. Then, compute $E_{k}(m_1)$ for all $k<2^{23}$, and check if there exists a $k'$ such that $D_{k'}(c_1)=E_{k}(m_1)$. If so, then $k_0=k$, $k_1=k'$. The existence can be check in constant time in average by using hash table.
+
+    After get $k_0$ and $k_1$, we can get the final flag by computing $D_{k_0}(D_{k_1}(c))$.\\
+\texttt{BALSN\{so\_2DES\_is\_not\_used\_today\}}
+
+\section{Time Machine}
+    \textit{Google} provide a pair of pdf files with different contents but same $SHA1$ value on \url{https://shattered.io}. After truncate the same suffix, we get a pair of strings collides in $SHA1$ of length $2560$ bits. Let the two strings be $s_x$i and $s_y$.
+    By the property of \textit{Merkle Damgard construction}, for all string $s$, $SHA1(s_x|s)=SHA1(s_y|s)$. That is, we can construct infinitely many pair of collision by appending the same string to $s_x$ and $s_y$.
+
+    Randomly choose a string $s$ repeatedly until the right most 24bits of $SHA1(s_x|s)$ meets the constraint. Then, send $SHA1(s_x|s)$ and $SHA1(s_y|s)$ to the server, and we get the final flkg.\\
+\texttt{BALSN\{P0W\_1s\_4\_w4st3\_0f\_t1m3\_4nd\_3n3rgy\}}
+\section{Future Oracle}
+\begin{enumerate}[label=\arabic*., topsep=0pt,itemsep=0pt,partopsep=1ex,parsep=1ex]
+    \item Pick $ID$ = \texttt{admin}, $N_c$ = $7122$, $action$=\texttt{"login"}.
+    \item Send $(ID||N_c||SHA256(ID||N_c))$ to server.
+    \item Get $N_s$ from server, let $Message$ = $ID||N_s||\text{\texttt{login}}$.
+    \item Open a new connection, and send $ID||N_s||SHA256(ID||N_s)$ to server,\\
+       get $Mac$ = $SHA256(ID||N_s||\text{\texttt{login}})$ from server,\\
+       and then close the new connection.
+    \item Do length extension attack on $Mac$ to get\\
+        $newMessage$ = $ID||N_s||\text{\texttt{login }<padding>}||\text{\texttt{printflag}}$,\\
+        $newMac$ = $SHA256(ID||N_s||\text{\texttt{login }<padding>}||\text{\texttt{printflag}})$
+    \item Send $newMessage||newMac$ to server, and we will get the final flag.
+\end{enumerate}
+\texttt{BALSN\{Wh4t\_1f\_u\_cou1d\_s33\_th3\_futur3\}}
+
+\section{Digital Saving Account}
+        
+\end{document}

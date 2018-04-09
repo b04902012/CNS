@@ -1,0 +1,131 @@
+%!TEX program = xelatex
+\documentclass[12pt,a4paper]{report}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{clrscode3e}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{subfig}
+\usepackage{listing}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usepackage{array}
+\newcolumntype{C}{>$c<$}
+\lstset{basicstyle=\ttfamily}
+\usetikzlibrary{calc,shapes.multipart,chains,arrows}
+
+\newcommand{\points}[1]{ ($#1$ \textit{points}) } 
+
+\usepackage{fontspec}
+%\setmainfont{Gill Sans MT}
+%\setmainfont{Helvetica}
+
+\pagestyle{plain}
+
+\linespread{1.3}
+\textwidth=17cm \textheight=24cm \voffset=-2cm \hoffset=-1.7cm
+
+\theoremstyle{definition}
+\newtheorem{problem}{\textbf{Problem}}
+\newtheorem{example}{Example}
+
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\makeatother
+\newcommand{\fontitem}{\Large}
+\newcommand{\fontitemi}{\normalsize}
+\newcommand{\fontitemii}{\normalsize}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\def\headline#1{\hbox to \hsize{\hrulefill\quad\lower.3em\hbox{#1}\quad\hrulefill}}
+\def\headline#1{\hbox to \hsize{\hrulefill\quad\lower.3em\hbox{#1}\quad\hrulefill}}
+
+\begin{document}
+
+\begin{center}
+\textbf{\Large Introduction to Mathematical Logic, Spring 2018\\}
+\textbf{\Large Homework 1\\} 
+\vspace{5pt}
+\textbf{B04902012 Han-Sheng Liu, CSIE, NTU}\\
+E-mail: \href{mailto:b04902012@ntu.edu.tw}{\texttt{b04902012@ntu.edu.tw}}\\
+
+\end{center}
+\vspace{10pt}
+\begin{enumerate}[label=(\arabic*)]
+\item
+    \begin{enumerate}[label=(\alph*)]
+        \item
+            \[
+            \begin{array}{C|C|C|C}
+            $p$ & $q$ & $q\to p$ & $p\to(q\to p)$\\
+            \hline
+            T & T & T & T\\
+            T & F & T & T\\
+            F & T & F & T\\
+            F & F & T & T
+            \end{array}
+            \]
+        \item
+            \[
+            \begin{array}{C|C|C|C|C|C}
+            $p$ & $q$ & $r$ & $p\to(q\to r)$ & $(p\to q)\to(p\to r)$ & $(p\to(q\to r))\to((p\to q)\to(p\to r))$\\
+            \hline
+            T & T & T & T & T & T\\
+            T & T & F & F & F & T\\
+            T & F & T & T & T & T\\
+            T & F & F & T & T & T\\
+            F & T & T & T & T & T\\
+            F & T & F & T & T & T\\
+            F & F & T & T & T & T\\
+            F & F & F & T & T & T\\
+            \end{array}
+            \]
+        \item
+            \[
+            \begin{array}{C|C|C|C}
+            $p$ & $q$ & $p\lor q$ & $p\to(p\lor q)$\\
+            \hline
+            T & T & T & T\\
+            T & F & T & T\\
+            F & T & T & T\\
+            F & F & F & T
+            \end{array}
+            \]
+        \item
+            \[
+            \begin{array}{C|C|C|C}
+            $p$ & $q$ & $\neg p\to q$ & $p\to(\neg p\to q)$\\
+            \hline
+            T & T & T & T\\
+            T & F & T & T\\
+            F & T & T & T\\
+            F & F & F & T
+            \end{array}
+            \]
+    \end{enumerate}
+    All formulas are tautology.
+\item
+    The formulas are constructed as following:
+    $\alpha_k = p_{k,1}\lor p_{k,2}\lor p_{k,3}\lor p_{k,4}
+                \bigwedge\limits_{1\leq i<j\leq 4}\neg(p_{k,i}\land p_{k,j}
+                \bigwedge\limits_{1\leq i\leq 4}
+                        )
+
+            
+
+            
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}
